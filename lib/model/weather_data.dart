@@ -18,8 +18,10 @@ class Current {
   double? windgust;
   List<Weather?>? weather;
   Rain? rain;
+  String? weathertype;
+  String? icon;
 
-  Current({this.dt, this.sunrise, this.sunset, this.temp, this.feelslike, this.pressure, this.humidity, this.dewpoint, this.uvi, this.clouds, this.visibility, this.windspeed, this.winddeg, this.windgust, this.weather, this.rain});
+  Current({this.dt, this.sunrise, this.sunset, this.temp, this.feelslike, this.pressure, this.humidity, this.dewpoint, this.uvi, this.clouds, this.visibility, this.windspeed, this.winddeg, this.windgust, this.weather, this.rain, this.weathertype ,this.icon});
 
   Current.fromJson(Map<String, dynamic> json) {
     dt = json['dt'];
@@ -36,13 +38,15 @@ class Current {
     windspeed = json['current']['wind_speed'];
     winddeg = json['wind_deg'];
     windgust = json['wind_gust'];
+    weathertype = json['current']['weather'][0]['main'];
+    icon = json['current']['weather'][0]['icon'];
     if (json['weather'] != null) {
       weather = <Weather>[];
-      json['current'].forEach((v) {
+      json['weather'].forEach((v) {
         weather!.add(Weather.fromJson(v));
       });
     }
-    rain = json['rain'] != null ? Rain?.fromJson(json['rain']) : null;
+    rain = json['current']['rain'] != null ? Rain?.fromJson(json['current']['rain']['1h']) : null;
   }
 
   Map<String, dynamic> toJson() {

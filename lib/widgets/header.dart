@@ -18,10 +18,16 @@ class _HeaderWidgetState extends State<HeaderWidget> {
   String date = DateFormat("yMMMMd").format(DateTime.now());
   final GlobalController globalController = Get.put(GlobalController(), permanent:true);
 
-
+  bool isday = false;
   @override
   void initState() {
     // TODO: implement initState
+    int hours = DateTime.now().hour;
+    if (hours >= 5 && hours < 18) {
+      setState(() {
+        isday = true;
+      });
+    }
     print(globalController.getlatitude().value);
     getAddress(globalController.getlatitude().value,globalController.getlongitude().value);
     super.initState();
@@ -50,7 +56,7 @@ class _HeaderWidgetState extends State<HeaderWidget> {
                 style: GoogleFonts.inter(
                   fontSize: 35,
                   fontWeight: FontWeight.w600,
-                  color: HexColor("313341"),
+                  color: isday? HexColor("313341"):HexColor("FCF9FF"),
                 ),
               ),
             ),
@@ -68,7 +74,7 @@ class _HeaderWidgetState extends State<HeaderWidget> {
               style: GoogleFonts.inter(
                 fontSize: 12,
                 fontWeight: FontWeight.w500,
-                color: HexColor("9A938C"),
+                color: isday?HexColor("9A938C"):HexColor("B08ED0"),
               ),
             ),
           )

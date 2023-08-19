@@ -19,20 +19,36 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  bool isday = false;
+  @override
+  void initState() {
+    // TODO: implement initState
+
+    int hours = DateTime.now().hour;
+    if (hours >= 5 && hours < 18) {
+      setState(() {
+        isday = true;
+      });
+    }
+    super.initState();
+  }
   ApiService apiService = ApiService();
   final GlobalController globalController =
       Get.put(GlobalController(), permanent: true);
   @override
   Widget build(BuildContext context) {
+
     return Scaffold(
-      backgroundColor: HexColor("FFDBB1"),
+      backgroundColor: isday ? HexColor("FFDBB1"):HexColor("683698"),
       body: Stack(
         children: [
           Container(
             height: MediaQuery.of(context).size.height,
             width: MediaQuery.of(context).size.width,
-            child: Image.asset(
-              "assets/images/backgroundpng.png",
+            child:
+
+            Image.asset(isday?
+              "assets/images/backgroundpng.png":"assets/images/night.gif",
               fit: BoxFit.cover,
             ),
           ),
@@ -58,19 +74,19 @@ class _HomePageState extends State<HomePage> {
                               crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
                                 Image.asset(
-                                  "assets/images/storm.png",
-                                  scale: 4,
+                                  "assets/images/${currentWeather?.icon}.png",
+                                  scale: 0.6,
                                 ),
                                 Column(
                                   children: [
                                     Padding(
-                                      padding: const EdgeInsets.only(left: 100),
+                                      padding: const EdgeInsets.only(left: 130),
                                       child: Text(
                                         "°C",
                                         style: GoogleFonts.inter(
                                             fontSize: 20,
                                             fontWeight: FontWeight.w400,
-                                            color: HexColor("303345"),
+                                            color: isday?HexColor("303345"):HexColor("FCF9FF"),
                                             height: 0.1),
                                       ),
                                     ),
@@ -79,15 +95,15 @@ class _HomePageState extends State<HomePage> {
                                       style: GoogleFonts.inter(
                                           fontSize: 100,
                                           fontWeight: FontWeight.w800,
-                                          color: HexColor("303345"),
+                                          color: isday?HexColor("303345"):HexColor("FCF9FF"),
                                           height: 1.0),
                                     ),
                                     Text(
-                                      "${currentWeather?.weather?[0]?.main}",
+                                      "${currentWeather?.weathertype}",
                                       style: GoogleFonts.inter(
                                           fontSize: 30,
                                           fontWeight: FontWeight.w500,
-                                          color: HexColor("303345")),
+                                          color: isday?HexColor("303345"):HexColor("DFCAF2")),
                                     ),
                                   ],
                                 )
@@ -140,7 +156,7 @@ class _HomePageState extends State<HomePage> {
                                           ),
                                           Image.asset("assets/images/rain.png",
                                               scale: 11,
-                                              color: HexColor("303345")),
+                                              color: isday?HexColor("303345"):HexColor("F8F0FF")),
                                           SizedBox(
                                             width: 15,
                                           ),
@@ -149,18 +165,18 @@ class _HomePageState extends State<HomePage> {
                                             style: GoogleFonts.inter(
                                                 fontWeight: FontWeight.w600,
                                                 fontSize: 12,
-                                                color: HexColor("303345")),
+                                                color: isday?HexColor("303345"):HexColor("F8F0FF")),
                                           )
                                         ],
                                       ),
                                       Row(
                                         children: [
                                           Text(
-                                            "3 cm",
+                                            "${currentWeather.rain}",
                                             style: GoogleFonts.inter(
                                                 fontWeight: FontWeight.w600,
                                                 fontSize: 16,
-                                                color: HexColor("303345")),
+                                                color: isday?HexColor("303345"):HexColor("F8F0FF")),
                                           ),
                                           SizedBox(
                                             width: 40,
@@ -215,7 +231,7 @@ class _HomePageState extends State<HomePage> {
                                         ),
                                         Image.asset("assets/images/windy.png",
                                             scale: 11,
-                                            color: HexColor("303345")),
+                                            color:isday?HexColor("303345"):HexColor("F8F0FF")),
                                         SizedBox(
                                           width: 15,
                                         ),
@@ -224,7 +240,7 @@ class _HomePageState extends State<HomePage> {
                                           style: GoogleFonts.inter(
                                               fontWeight: FontWeight.w600,
                                               fontSize: 12,
-                                              color: HexColor("303345")),
+                                              color: isday?HexColor("303345"):HexColor("F8F0FF")),
                                         )
                                       ],
                                     ),
@@ -235,7 +251,7 @@ class _HomePageState extends State<HomePage> {
                                           style: GoogleFonts.inter(
                                               fontWeight: FontWeight.w600,
                                               fontSize: 16,
-                                              color: HexColor("303345")),
+                                              color: isday?HexColor("303345"):HexColor("F8F0FF")),
                                         ),
                                         SizedBox(
                                           width: 40,
@@ -292,7 +308,7 @@ class _HomePageState extends State<HomePage> {
                                         Image.asset(
                                             "assets/images/humidity.png",
                                             scale: 11,
-                                            color: HexColor("303345")),
+                                            color: isday?HexColor("303345"):HexColor("F8F0FF")),
                                         SizedBox(
                                           width: 15,
                                         ),
@@ -301,7 +317,7 @@ class _HomePageState extends State<HomePage> {
                                           style: GoogleFonts.inter(
                                               fontWeight: FontWeight.w600,
                                               fontSize: 12,
-                                              color: HexColor("303345")),
+                                              color: isday?HexColor("303345"):HexColor("F8F0FF")),
                                         )
                                       ],
                                     ),
@@ -312,7 +328,7 @@ class _HomePageState extends State<HomePage> {
                                           style: GoogleFonts.inter(
                                               fontWeight: FontWeight.w600,
                                               fontSize: 16,
-                                              color: HexColor("303345")),
+                                              color: isday?HexColor("303345"):HexColor("F8F0FF")),
                                         ),
                                         SizedBox(
                                           width: 40,
